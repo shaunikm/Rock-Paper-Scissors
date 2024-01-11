@@ -20,17 +20,17 @@ global paper_h, paper_w
 class text_and_image(t.Turtle):
 
     # move object without drawing a random line
-    def teleport(self, x: int, y: int):
+    def teleport(self, x: int, y: int) -> None:
         self.penup()
         self.goto(x, y)
         self.pendown()
     
     # write to window with custom font
-    def text(self, text: str):
+    def text(self, text: str) -> None:
         self.write(text, font=("Verdana", 15, "normal"))
     
     # select correct image based on choice
-    def image_select(self, choice: str):
+    def image_select(self, choice: str) -> None:
         # dictionary with keys corresponding to choice
         image_dict = {
         "rock" : rock_image,
@@ -42,7 +42,7 @@ class text_and_image(t.Turtle):
         self.shape(image_dict[choice])
 
     # check whether player clicks the instance
-    def check_click(self, x: int, y: int, length: int, height: int):
+    def check_click(self, x: int, y: int, length: int, height: int) -> bool:
         # first element is the left side of the instance
         # second element is the right side of the instance
         innerbound = (self.pos()[0] + height/2, self.pos()[0] - height/2)
@@ -54,12 +54,12 @@ class text_and_image(t.Turtle):
         return x >= innerbound[1] and x <= innerbound[0] and y >= outerbound[1] and y <= outerbound[0]
 
 # take random CPU input
-def CPU():
+def CPU() -> str:
     choices = ["rock", "paper", "scissors"]
     return rand.choice(choices)
 
 # eval round
-def evaluate(player1, player2):
+def evaluate(player1: str, player2: str) -> int:
     win_dict = {
         "paper" : "rock",
         "scissors" : "paper",
@@ -74,7 +74,7 @@ def evaluate(player1, player2):
         return 0
     
 # calculate win rate and return a visual
-def win_loss_stats(win, round):
+def win_loss_stats(win: int, round: int) -> str:
     """
     The win rate bar is made of 10 "blocks." Each block is either
     a "-" or a " ". The "-" represents win rate to the nearest
@@ -105,7 +105,7 @@ def win_loss_stats(win, round):
         return ("[          ] 0%")
 
 # clear the screen after round is over
-def reset_screen():
+def reset_screen() -> None:
     player_image.hideturtle()
     cpu_image.hideturtle()
     text.hideturtle()
@@ -154,7 +154,7 @@ paper_choice = text_and_image()
 rock_choice = text_and_image()
 scissors_choice = text_and_image()
 
-def show_choice():
+def show_choice() -> None:
     # show paper choice
     paper_choice.teleport(0, 0)
     paper_choice.image_select("paper")
@@ -174,7 +174,7 @@ def show_choice():
     text.teleport(-100, 200)
     text.text("Click your choice")
 
-def main(player_choice):
+def main(player_choice: str) -> None:
     # globalize scope of certain vars that are needed
     global cont
     global win_count
@@ -260,7 +260,7 @@ def main(player_choice):
         text.teleport(-300, -190)
         text.text("Draw!")
         round_count += 1 # increment total round count
-            
+
     # display win rate after round
     text.teleport(100, 360)
     text.text("Win rate: " + win_loss_stats(win_count, analytic_round))
@@ -274,7 +274,7 @@ def main(player_choice):
     cont = True
 
 # check what the player clicks or whether they are continuing
-def check(x, y):
+def check(x: int, y: int) -> None:
     global cont
     global in_game
 
